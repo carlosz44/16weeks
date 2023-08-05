@@ -12,7 +12,7 @@ import Stats from "./components/Stats.vue";
         </h1>
 
         <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" class="logo" alt="Vite logo" />
+          <img src="/vite.svg" alt="Vite logo" />
         </a>
       </div>
 
@@ -26,6 +26,15 @@ import Stats from "./components/Stats.vue";
           <Calendar />
         </div>
       </div>
+    </div>
+    <div class="flex justify-center py-6">
+      <a
+        href="https://www.youtube.com/watch?v=P1q7t07CW_E"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img src="/bear.png" alt="Bear down for midterms" />
+      </a>
     </div>
   </main>
 </template>
