@@ -1,34 +1,39 @@
 <script setup lang="ts">
 import { compareAsc, differenceInDays, differenceInWeeks } from "date-fns";
-
-const START_DATE = new Date("2023-07-31T00:00:00");
-const END_DATE = new Date("2023-11-20T00:00:00");
-const MIDTERMS_DATE = new Date("2023-09-19T00:00:00");
-const FINALS_DATE = new Date("2023-11-14T00:00:00");
-
+const props = defineProps<dateProps>();
 const now = new Date();
-const isMidterm = compareAsc(now, MIDTERMS_DATE) !== -1;
+const isMidterm = compareAsc(now, props.midterms) !== -1;
+
+export type dateProps = {
+  start: Date;
+  end: Date;
+  midterms: Date;
+  finals: Date;
+};
 
 const stats = [
   {
     name: "Semana",
-    value: `${differenceInWeeks(now, START_DATE, { roundingMethod: "ceil" })}`,
+    value: `${differenceInWeeks(now, props.start, { roundingMethod: "ceil" })}`,
   },
   {
     name: `${isMidterm ? "Finales" : "Parciales"} en`,
-    value: `${differenceInDays(isMidterm ? FINALS_DATE : MIDTERMS_DATE, now)}`,
+    value: `${differenceInDays(
+      isMidterm ? props.finals : props.midterms,
+      now
+    )}`,
     unit: "días",
   },
   {
     name: "Fin de ciclo",
-    value: `${differenceInDays(END_DATE, now)}`,
+    value: `${differenceInDays(props.end, now)}`,
     unit: "días",
   },
   {
     name: "Progreso",
     value: `${(
-      (differenceInDays(now, START_DATE) * 100) /
-      differenceInDays(END_DATE, START_DATE)
+      (differenceInDays(now, props.start) * 100) /
+      differenceInDays(props.end, props.start)
     ).toFixed(2)}`,
     unit: "%",
   },
