@@ -1,41 +1,48 @@
-<script setup>
-import { DateTime } from "luxon";
+<script setup lang="ts">
+import { addDays, compareDesc, formatISO, getMonth, isToday } from "date-fns";
 
-const months = [
-  { number: 8, start: "2023-07-30", end: "2023-09-09" },
-  { number: 9, start: "2023-08-27", end: "2023-10-07" },
-  { number: 10, start: "2023-10-01", end: "2023-11-11" },
-  { number: 11, start: "2023-10-29", end: "2023-12-09" },
+type month = {
+  number: number;
+  start: string;
+  end: string;
+};
+
+const months: Record<string, any> = [
+  { number: 8, start: "2023-07-30T00:00:00", end: "2023-09-09T00:00:00" },
+  { number: 9, start: "2023-08-27T00:00:00", end: "2023-10-07T00:00:00" },
+  { number: 10, start: "2023-10-01T00:00:00", end: "2023-11-11T00:00:00" },
+  { number: 11, start: "2023-10-29T00:00:00", end: "2023-12-09T00:00:00" },
 ].map((month) => createMonth(month));
 
-function createMonth(monthParams) {
-  let currentDate = DateTime.fromISO(monthParams.start);
+function createMonth(params: month) {
+  let currentDate = new Date(params.start);
   const days = [];
-  const monthsLookup = {
+  const monthsLookup: Record<number, string> = {
     8: "Agosto",
     9: "Setiembre",
     10: "Octubre",
     11: "Noviembre",
   };
-  const now = DateTime.now();
 
-  if (!monthsLookup[monthParams.number]) return {};
+  if (!monthsLookup[params.number]) return {};
 
-  while (currentDate <= DateTime.fromISO(monthParams.end)) {
-    const params = {};
+  while (compareDesc(currentDate, new Date(params.end)) !== -1) {
+    const additionalParams: Record<string, any> = {};
 
-    if (parseInt(currentDate.toFormat("L")) === parseInt(monthParams.number)) {
-      params.isCurrentMonth = true;
-
-      if (now.hasSame(currentDate, "day") && now.hasSame(currentDate, "year"))
-        params.isToday = true;
+    if (getMonth(currentDate) + 1 === params.number) {
+      additionalParams.isCurrentMonth = true;
+      if (isToday(currentDate)) additionalParams.isToday = true;
     }
-    days.push({ date: currentDate.toISODate(), ...params });
-    currentDate = currentDate.plus({ days: 1 });
+
+    days.push({
+      date: formatISO(currentDate, { representation: "date" }),
+      ...additionalParams,
+    });
+    currentDate = addDays(currentDate, 1);
   }
 
   return {
-    name: monthsLookup[monthParams.number],
+    name: monthsLookup[params.number],
     days,
   };
 }
