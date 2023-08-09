@@ -18,12 +18,12 @@ const statsProps: dateProps = {
 <template>
   <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-3xl min-h-screen space-y-8">
-      <div class="flex justify-between">
+      <div class="flex justify-between items-center">
         <h1 class="text-2xl font-extrabold text-center sm:text-left">
           16 Weeks
         </h1>
         <a href="https://vitejs.dev" target="_blank">
-          <img src="/logo.svg" alt="Logo" />
+          <img class="h-11" src="/logo.svg" alt="Logo" />
         </a>
       </div>
       <div
