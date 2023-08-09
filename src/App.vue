@@ -7,7 +7,7 @@ const END_DATE = new Date("2023-11-20T00:00:00");
 const MIDTERMS_DATE = new Date("2023-09-19T00:00:00");
 const FINALS_DATE = new Date("2023-11-14T00:00:00");
 
-const props: dateProps = {
+const statsProps: dateProps = {
   start: START_DATE,
   end: END_DATE,
   midterms: MIDTERMS_DATE,
@@ -23,17 +23,17 @@ const props: dateProps = {
           16 Weeks
         </h1>
         <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" alt="Vite logo" />
+          <img src="/logo.svg" alt="Vite logo" />
         </a>
       </div>
       <div
         class="divide-y divide-zinc-600 overflow-hidden rounded-lg bg-zinc-900"
       >
         <div class="px-4 py-5 sm:px-6">
-          <Stats v-bind="props" />
+          <Stats v-bind="statsProps" />
         </div>
         <div class="px-4 py-5 sm:p-6">
-          <Calendar />
+          <Calendar :end="END_DATE" />
         </div>
       </div>
     </div>

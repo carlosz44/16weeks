@@ -1,4 +1,5 @@
 <script setup lang="ts">
+defineProps<{ end: Date }>();
 import { addDays, compareDesc, formatISO, getMonth, isToday } from "date-fns";
 
 type month = {
@@ -78,7 +79,9 @@ function createMonth(params: month) {
               type="button"
               :class="[
                 day.isCurrentMonth
-                  ? 'bg-white text-gray-900'
+                  ? compareDesc(new Date(day.date), end) !== -1
+                    ? 'bg-blue-50 text-gray-900'
+                    : 'bg-white text-gray-900'
                   : 'bg-gray-50 text-gray-400',
                 dayIdx === 0 && 'rounded-tl-lg',
                 dayIdx === 6 && 'rounded-tr-lg',
@@ -90,7 +93,7 @@ function createMonth(params: month) {
               <time
                 :datetime="day.date"
                 :class="[
-                  day.isToday && 'bg-indigo-600 font-semibold text-white',
+                  day.isToday && 'bg-red-700 font-semibold text-white',
                   'mx-auto flex h-7 w-7 items-center justify-center rounded-full',
                 ]"
                 >{{ day.date.split("-").pop().replace(/^0/, "") }}</time
