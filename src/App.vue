@@ -23,7 +23,7 @@ const statsProps: dateProps = {
           16 Weeks
         </h1>
         <a href="https://vitejs.dev" target="_blank">
-          <img src="/logo.svg" alt="Vite logo" />
+          <img src="/logo.svg" alt="Logo" />
         </a>
       </div>
       <div
